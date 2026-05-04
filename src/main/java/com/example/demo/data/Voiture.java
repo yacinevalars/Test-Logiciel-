@@ -1,10 +1,12 @@
 package com.example.demo.data;
 // Test de commit
+// Test de commit 2
 public class Voiture {
 
     String marque;
     int prix;
     int id;
+    int compteur = 0;
 
     public Voiture(){
     }
