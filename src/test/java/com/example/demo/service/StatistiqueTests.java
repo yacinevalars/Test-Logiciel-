@@ -1,17 +1,19 @@
 package com.example.demo.service;
 
 import com.example.demo.data.Voiture;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 public class StatistiqueTests {
 
-    @Autowired
-    StatistiqueImpl statistiqueImpl;
+    private Statistique statistique;
+
+    @BeforeEach
+    void setUp() {
+        statistique = new StatistiqueImpl();
+    }
 
     @Test
     void testAjouterEtPrixMoyen() {
@@ -21,20 +23,32 @@ public class StatistiqueTests {
         Voiture voiture2 = new Voiture();
         voiture2.setPrix(20000);
 
-        statistiqueImpl.ajouter(voiture1);
-        statistiqueImpl.ajouter(voiture2);
+        statistique.ajouter(voiture1);
+        statistique.ajouter(voiture2);
 
-        Echantillon resultat = statistiqueImpl.prixMoyen();
+        Echantillon resultat = statistique.prixMoyen();
 
         assertEquals(2, resultat.getNombreDeVoitures());
         assertEquals(15000, resultat.getPrixMoyen());
-        System.out.println("Le Test est OK");
+    }
+
+    @Test
+    void testPrixMoyenAvecUneSeuleVoiture() {
+        Voiture voiture = new Voiture();
+        voiture.setPrix(12000);
+
+        statistique.ajouter(voiture);
+
+        Echantillon resultat = statistique.prixMoyen();
+
+        assertEquals(1, resultat.getNombreDeVoitures());
+        assertEquals(12000, resultat.getPrixMoyen());
     }
 
     @Test
     void testPrixMoyenSansVoitureLanceArithmeticException() {
         assertThrows(ArithmeticException.class, () -> {
-            statistiqueImpl.prixMoyen();
+            statistique.prixMoyen();
         });
     }
 }
