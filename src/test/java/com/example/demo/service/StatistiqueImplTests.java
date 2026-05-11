@@ -28,6 +28,8 @@ public class StatistiqueImplTests {
 
         assertEquals(2, resultat.getNombreDeVoitures());
         assertEquals(15000, resultat.getPrixMoyen());
+        System.out.println("Nombre de voitures : " + resultat.getNombreDeVoitures());
+        System.out.println("Prix moyen : " + resultat.getPrixMoyen());
         System.out.println("Le Test est OK");
     }
 
